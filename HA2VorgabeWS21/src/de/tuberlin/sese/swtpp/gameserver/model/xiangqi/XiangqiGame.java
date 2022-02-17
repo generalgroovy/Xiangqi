@@ -6,7 +6,7 @@ import de.tuberlin.sese.swtpp.gameserver.model.*;
 
 import java.io.Serializable;
 
-public class XiangqiGame extends Game implements Serializable{
+public class XiangqiGame extends Game implements Serializable, XiangqiConstants{
 
 	/**
 	 *
