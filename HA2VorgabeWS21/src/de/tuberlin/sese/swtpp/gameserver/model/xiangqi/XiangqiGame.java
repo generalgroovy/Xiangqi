@@ -259,6 +259,20 @@ public class XiangqiGame extends Game implements Serializable, XiangqiConstants{
 	}
 	
 	/**
+	 * translates object board state to char board state
+	 * @return
+	 */
+	public char[][] translateObjectBoard2StringBoard() {
+		char[][] boardAsString = new char[BOARD_HEIGHT][BOARD_LENGTH];
+		for (int i = 0; i < boardStateArray.length; i++) {
+			for (int j = 0; j < boardStateArray[i].length; j++) {
+				boardAsString[i][j] = boardStateArray[i][j].getPieceOnMe().charAt(0);
+			}
+		}
+		return boardAsString;
+	}
+	
+	/**
 	 * turns the board matrix into compact FEN-String
 	 * @param matrix
 	 * @return

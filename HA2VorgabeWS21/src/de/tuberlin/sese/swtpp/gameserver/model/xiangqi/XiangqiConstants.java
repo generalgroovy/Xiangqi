@@ -4,6 +4,8 @@ public interface XiangqiConstants {
 	
 	// for board representation in FEN-Notation
 	String BOARD_STATE_BEGINNING = "rheagaehr/9/1c5c1/s1s1s1s1s/9/9/S1S1S1S1S/1C5C1/9/RHEAGAEHR";
+	int BOARD_LENGTH = 9;
+	int BOARD_HEIGHT = 9;
 	
 	String PIECES_BLACK_ALL = "GAEHRCS";
 	String PIECES_RED_ALL = "gaehrcs";
