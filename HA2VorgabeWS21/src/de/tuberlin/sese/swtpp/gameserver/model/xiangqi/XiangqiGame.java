@@ -233,7 +233,7 @@ public class XiangqiGame extends Game implements Serializable, XiangqiConstants{
 			if(state.charAt(i) == '/') {
 				r++;
 				c = 0;
-			} else if("gaehrcsGAEHRCS".contains(state.substring(i,1))) {
+			} else if(PIECES_ALL.contains(state.substring(i,1))) {
 				result[c][r] = state.charAt(i);
 				c++;
 			} else if("0123456789".contains(state.substring(i,1))) {
@@ -253,9 +253,9 @@ public class XiangqiGame extends Game implements Serializable, XiangqiConstants{
 		Integer i = 0;
 		for(Integer r=0;r<10;r++) {
 			for(Integer c=0;c<9;c++) {
-				if("gaehrcsGAEHRCS".contains("" + matrix[c][r])) {
+				if(PIECES_ALL.contains("" + matrix[c][r])) {
 					result = result + matrix[c][r];
-				} else if("gaehrcsGAEHRCS".contains("" + matrix[c+1][r]) || c == 9) {
+				} else if(PIECES_ALL.contains("" + matrix[c+1][r]) || c == 9) {
 					result = result + i;
 					i = 0;
 				} else {
@@ -317,7 +317,7 @@ public class XiangqiGame extends Game implements Serializable, XiangqiConstants{
 	 * @param area
 	 * @return
 	 */
-	public boolean withinArea(Integer[] pos, String area) {
+	public boolean areCoordsWithinArea(Integer[] pos, String area) {
 		boolean result = true;
 		if(area == "b" && (pos[0] < 0 || pos[0] > 8 || pos[1] < 0 || pos[1] > 9)) {
 			result = false;
@@ -350,25 +350,25 @@ public class XiangqiGame extends Game implements Serializable, XiangqiConstants{
 				pos[0] = c;
 				pos[1] = r;
 				if(board[c][r] == 'G') {
-					threatened = threatened + evilEye_G(pos, board);
+					threatened = threatened + listPossibleFieldsEvilEye_G(pos, board);
 				}
 				if(board[c][r] == 'A') {
-					threatened = threatened + possibleFields_A(pos, board);
+					threatened = threatened + listPossibleFields_A(pos, board);
 				}
 				if(board[c][r] == 'E') {
-					threatened = threatened + possibleFields_E(pos, board);
+					threatened = threatened + listPossibleFields_E(pos, board);
 				}
 				if(board[c][r] == 'H') {
-					threatened = threatened + possibleFields_H(pos, board);
+					threatened = threatened + listPossibleFields_H(pos, board);
 				}
 				if(board[c][r] == 'R') {
-					threatened = threatened + possibleFields_R(pos, board);
+					threatened = threatened + listPossibleFields_R(pos, board);
 				}
 				if(board[c][r] == 'C') {
-					threatened = threatened + possibleFields_C(pos, board);
+					threatened = threatened + listPossibleFields_C(pos, board);
 				}
 				if(board[c][r] == 'S') {
-					threatened = threatened + possibleFields_S(pos, board);
+					threatened = threatened + listPossibleFields_S(pos, board);
 				}
 			}
 		}
@@ -390,25 +390,25 @@ public class XiangqiGame extends Game implements Serializable, XiangqiConstants{
 				pos[0] = c;
 				pos[1] = r;
 				if(board[c][r] == 'g') {
-					threatened = threatened + evilEye_g(pos, board);
+					threatened = threatened + listPossibleFieldsEvilEye_g(pos, board);
 				}
 				if(board[c][r] == 'a') {
-					threatened = threatened + possibleFields_a(pos, board);
+					threatened = threatened + listPossibleFields_a(pos, board);
 				}
 				if(board[c][r] == 'e') {
-					threatened = threatened + possibleFields_e(pos, board);
+					threatened = threatened + listPossibleFields_e(pos, board);
 				}
 				if(board[c][r] == 'h') {
-					threatened = threatened + possibleFields_h(pos, board);
+					threatened = threatened + listPossibleFields_h(pos, board);
 				}
 				if(board[c][r] == 'r') {
-					threatened = threatened + possibleFields_r(pos, board);
+					threatened = threatened + listPossibleFields_r(pos, board);
 				}
 				if(board[c][r] == 'c') {
-					threatened = threatened + possibleFields_c(pos, board);
+					threatened = threatened + listPossibleFields_c(pos, board);
 				}
 				if(board[c][r] == 's') {
-					threatened = threatened + possibleFields_s(pos, board);
+					threatened = threatened + listPossibleFields_s(pos, board);
 				}
 			}
 		}
@@ -421,18 +421,18 @@ public class XiangqiGame extends Game implements Serializable, XiangqiConstants{
 	 * @param board
 	 * @return
 	 */
-	public String possibleFields_g(Integer[] pos, char[][] board) {
+	public String listPossibleFields_g(Integer[] pos, char[][] board) {
 		String result = "";
-		if(pos[1] > 0 && !"gaehrcs".contains(""+board[pos[0]][pos[1]-1])) {
+		if(pos[1] > 0 && !PIECES_RED_ALL.contains(""+board[pos[0]][pos[1]-1])) {
 			result = result + fieldString(pos[0], pos[1]-1);
 		}
-		if(pos[1] < 2 && !"gaehrcs".contains(""+board[pos[0]][pos[1]+1])) {
+		if(pos[1] < 2 && !PIECES_RED_ALL.contains(""+board[pos[0]][pos[1]+1])) {
 			result = result + fieldString(pos[0], pos[1]+1);
 		}
-		if(pos[0] > 3 && !"gaehrcs".contains(""+board[pos[0]-1][pos[1]])) {
+		if(pos[0] > 3 && !PIECES_RED_ALL.contains(""+board[pos[0]-1][pos[1]])) {
 			result = result + fieldString(pos[0]-1, pos[1]);
 		}
-		if(pos[0] < 5 && !"gaehrcs".contains(""+board[pos[0]+1][pos[1]])) {
+		if(pos[0] < 5 && !PIECES_RED_ALL.contains(""+board[pos[0]+1][pos[1]])) {
 			result = result + fieldString(pos[0]+1, pos[1]);
 		}
 		return result;
@@ -444,18 +444,18 @@ public class XiangqiGame extends Game implements Serializable, XiangqiConstants{
 	 * @param board
 	 * @return
 	 */
-	public String possibleFields_G(Integer[] pos, char[][] board) {
+	public String listPossibleFields_G(Integer[] pos, char[][] board) {
 		String result = "";
-		if(pos[1] > 7 && !"GAEHRCS".contains(""+board[pos[0]][pos[1]-1])) {
+		if(pos[1] > 7 && !PIECES_RED_ALL.contains(""+board[pos[0]][pos[1]-1])) {
 			result = result + fieldString(pos[0], pos[1]-1);
 		}
-		if(pos[1] < 9 && !"GAEHRCS".contains(""+board[pos[0]][pos[1]+1])) {
+		if(pos[1] < 9 && !PIECES_RED_ALL.contains(""+board[pos[0]][pos[1]+1])) {
 			result = result + fieldString(pos[0], pos[1]+1);
 		}
-		if(pos[0] > 3 && !"GAEHRCS".contains(""+board[pos[0]-1][pos[1]])) {
+		if(pos[0] > 3 && !PIECES_RED_ALL.contains(""+board[pos[0]-1][pos[1]])) {
 			result = result + fieldString(pos[0]-1, pos[1]);
 		}
-		if(pos[0] < 5 && !"GAEHRCS".contains(""+board[pos[0]+1][pos[1]])) {
+		if(pos[0] < 5 && !PIECES_RED_ALL.contains(""+board[pos[0]+1][pos[1]])) {
 			result = result + fieldString(pos[0]+1, pos[1]);
 		}
 		return result;
@@ -464,11 +464,11 @@ public class XiangqiGame extends Game implements Serializable, XiangqiConstants{
 	/**
 	 * lists fields "threatened" by red generals evil eye
 	 */
-	public String evilEye_g(Integer[] pos, char[][] board) {
+	public String listPossibleFieldsEvilEye_g(Integer[] pos, char[][] board) {
 		String result = "";
 		Integer[] p = pos;
 		p[1]++;
-		while(withinArea(p, "b") && !"gaehrcsGAEHRCS".contains(""+board[p[0]][p[1]])) {
+		while(areCoordsWithinArea(p, "b") && !PIECES_ALL.contains(""+board[p[0]][p[1]])) {
 			result = result + fieldString(p[0],p[1]);
 			p[1]++;
 		}
@@ -481,11 +481,11 @@ public class XiangqiGame extends Game implements Serializable, XiangqiConstants{
 	 * @param board
 	 * @return
 	 */
-	public String evilEye_G(Integer[] pos, char[][] board) {
+	public String listPossibleFieldsEvilEye_G(Integer[] pos, char[][] board) {
 		String result = "";
 		Integer[] p = pos;
 		p[1]--;
-		while(withinArea(p, "b") && !"gaehrcsGAEHRCS".contains(""+board[p[0]][p[1]])) {
+		while(areCoordsWithinArea(p, "b") && !PIECES_ALL.contains(""+board[p[0]][p[1]])) {
 			result = result + fieldString(p[0],p[1]);
 			p[1]--;
 		}
@@ -498,18 +498,18 @@ public class XiangqiGame extends Game implements Serializable, XiangqiConstants{
 	 * @param board
 	 * @return
 	 */
-	public String possibleFields_a(Integer[] pos, char[][] board) {
+	public String listPossibleFields_a(Integer[] pos, char[][] board) {
 		String result = "";
-		if(pos[0] > 3 && pos[1] > 0 && !"gaehrcs".contains(""+board[pos[0]-1][pos[1]-1])) {
+		if(pos[0] > 3 && pos[1] > 0 && !PIECES_RED_ALL.contains(""+board[pos[0]-1][pos[1]-1])) {
 			result = result + fieldString(pos[0]-1, pos[1]-1);
 		}
-		if(pos[0] > 3 && pos[1] < 2 && !"gaehrcs".contains(""+board[pos[0]-1][pos[1]+1])) {
+		if(pos[0] > 3 && pos[1] < 2 && !PIECES_RED_ALL.contains(""+board[pos[0]-1][pos[1]+1])) {
 			result = result + fieldString(pos[0]-1, pos[1]+1);
 		}
-		if(pos[0] < 5 && pos[1] > 0 && !"gaehrcs".contains(""+board[pos[0]+1][pos[1]-1])) {
+		if(pos[0] < 5 && pos[1] > 0 && !PIECES_RED_ALL.contains(""+board[pos[0]+1][pos[1]-1])) {
 			result = result + fieldString(pos[0]+1, pos[1]-1);
 		}
-		if(pos[0] < 5 && pos[1] < 2 && !"gaehrcs".contains(""+board[pos[0]+1][pos[1]+1])) {
+		if(pos[0] < 5 && pos[1] < 2 && !PIECES_RED_ALL.contains(""+board[pos[0]+1][pos[1]+1])) {
 			result = result + fieldString(pos[0]+1, pos[1]+1);
 		}
 		return result;
@@ -521,18 +521,18 @@ public class XiangqiGame extends Game implements Serializable, XiangqiConstants{
 	 * @param board
 	 * @return
 	 */
-	public String possibleFields_A(Integer[] pos, char[][] board) {
+	public String listPossibleFields_A(Integer[] pos, char[][] board) {
 		String result = "";
-		if(pos[0] > 3 && pos[1] > 7 && !"GAEHRCS".contains(""+board[pos[0]-1][pos[1]-1])) {
+		if(pos[0] > 3 && pos[1] > 7 && !PIECES_RED_ALL.contains(""+board[pos[0]-1][pos[1]-1])) {
 			result = result + fieldString(pos[0]-1, pos[1]-1);
 		}
-		if(pos[0] > 3 && pos[1] < 9 && !"GAEHRCS".contains(""+board[pos[0]-1][pos[1]+1])) {
+		if(pos[0] > 3 && pos[1] < 9 && !PIECES_RED_ALL.contains(""+board[pos[0]-1][pos[1]+1])) {
 			result = result + fieldString(pos[0]-1, pos[1]+1);
 		}
-		if(pos[0] < 5 && pos[1] > 7 && !"GAEHRCS".contains(""+board[pos[0]+1][pos[1]-1])) {
+		if(pos[0] < 5 && pos[1] > 7 && !PIECES_RED_ALL.contains(""+board[pos[0]+1][pos[1]-1])) {
 			result = result + fieldString(pos[0]+1, pos[1]-1);
 		}
-		if(pos[0] < 5 && pos[1] < 9 && !"GAEHRCS".contains(""+board[pos[0]+1][pos[1]+1])) {
+		if(pos[0] < 5 && pos[1] < 9 && !PIECES_RED_ALL.contains(""+board[pos[0]+1][pos[1]+1])) {
 			result = result + fieldString(pos[0]+1, pos[1]+1);
 		}
 		return result;
@@ -544,18 +544,18 @@ public class XiangqiGame extends Game implements Serializable, XiangqiConstants{
 	 * @param board
 	 * @return
 	 */
-	public String possibleFields_e(Integer[] pos, char[][] board) {
+	public String listPossibleFields_e(Integer[] pos, char[][] board) {
 		String result = "";
-		if(pos[0] > 1 && pos[1] > 1 && !"gaehrcsGAEHRCS".contains(""+board[pos[0]-1][pos[1]-1]) && !"gaehrcs".contains(""+board[pos[0]-2][pos[1]-2])) {
+		if(pos[0] > 1 && pos[1] > 1 && !PIECES_ALL.contains(""+board[pos[0]-1][pos[1]-1]) && !PIECES_RED_ALL.contains(""+board[pos[0]-2][pos[1]-2])) {
 			result = result + fieldString(pos[0]-2, pos[1]-2);
 		}
-		if(pos[0] > 1 && pos[1] < 4 && !"gaehrcsGAEHRCS".contains(""+board[pos[0]-1][pos[1]+1]) && !"gaehrcs".contains(""+board[pos[0]-2][pos[1]+2])) {
+		if(pos[0] > 1 && pos[1] < 4 && !PIECES_ALL.contains(""+board[pos[0]-1][pos[1]+1]) && !PIECES_RED_ALL.contains(""+board[pos[0]-2][pos[1]+2])) {
 			result = result + fieldString(pos[0]-2, pos[1]+2);
 		}
-		if(pos[0] < 7 && pos[1] > 1 && !"gaehrcsGAEHRCS".contains(""+board[pos[0]+1][pos[1]-1]) && !"gaehrcs".contains(""+board[pos[0]+2][pos[1]-2])) {
+		if(pos[0] < 7 && pos[1] > 1 && !PIECES_ALL.contains(""+board[pos[0]+1][pos[1]-1]) && !PIECES_RED_ALL.contains(""+board[pos[0]+2][pos[1]-2])) {
 			result = result + fieldString(pos[0]+2, pos[1]-2);
 		}
-		if(pos[0] < 7 && pos[1] < 4 && !"gaehrcsGAEHRCS".contains(""+board[pos[0]+1][pos[1]+1]) && !"gaehrcs".contains(""+board[pos[0]+2][pos[1]+2])) {
+		if(pos[0] < 7 && pos[1] < 4 && !PIECES_ALL.contains(""+board[pos[0]+1][pos[1]+1]) && !PIECES_RED_ALL.contains(""+board[pos[0]+2][pos[1]+2])) {
 			result = result + fieldString(pos[0]+2, pos[1]+2);
 		}
 		return result;
@@ -567,18 +567,18 @@ public class XiangqiGame extends Game implements Serializable, XiangqiConstants{
 	 * @param board
 	 * @return
 	 */
-	public String possibleFields_E(Integer[] pos, char[][] board) {
+	public String listPossibleFields_E(Integer[] pos, char[][] board) {
 		String result = "";
-		if(pos[0] > 1 && pos[1] > 5 && !"gaehrcsGAEHRCS".contains(""+board[pos[0]-1][pos[1]-1]) && !"GAEHRCS".contains(""+board[pos[0]-2][pos[1]-2])) {
+		if(pos[0] > 1 && pos[1] > 5 && !PIECES_ALL.contains(""+board[pos[0]-1][pos[1]-1]) && !PIECES_RED_ALL.contains(""+board[pos[0]-2][pos[1]-2])) {
 			result = result + fieldString(pos[0]-2, pos[1]-2);
 		}
-		if(pos[0] > 1 && pos[1] < 8 && !"gaehrcsGAEHRCS".contains(""+board[pos[0]-1][pos[1]+1]) && !"GAEHRCS".contains(""+board[pos[0]-2][pos[1]+2])) {
+		if(pos[0] > 1 && pos[1] < 8 && !PIECES_ALL.contains(""+board[pos[0]-1][pos[1]+1]) && !PIECES_RED_ALL.contains(""+board[pos[0]-2][pos[1]+2])) {
 			result = result + fieldString(pos[0]-2, pos[1]+2);
 		}
-		if(pos[0] < 7 && pos[1] > 5 && !"gaehrcsGAEHRCS".contains(""+board[pos[0]+1][pos[1]-1]) && !"GAEHRCS".contains(""+board[pos[0]+2][pos[1]-2])) {
+		if(pos[0] < 7 && pos[1] > 5 && !PIECES_ALL.contains(""+board[pos[0]+1][pos[1]-1]) && !PIECES_RED_ALL.contains(""+board[pos[0]+2][pos[1]-2])) {
 			result = result + fieldString(pos[0]+2, pos[1]-2);
 		}
-		if(pos[0] < 7 && pos[1] < 8 && !"gaehrcsGAEHRCS".contains(""+board[pos[0]+1][pos[1]+1]) && !"GAEHRCS".contains(""+board[pos[0]+2][pos[1]+2])) {
+		if(pos[0] < 7 && pos[1] < 8 && !PIECES_ALL.contains(""+board[pos[0]+1][pos[1]+1]) && !PIECES_RED_ALL.contains(""+board[pos[0]+2][pos[1]+2])) {
 			result = result + fieldString(pos[0]+2, pos[1]+2);
 		}
 		return result;
@@ -590,7 +590,7 @@ public class XiangqiGame extends Game implements Serializable, XiangqiConstants{
 	 * @param board
 	 * @return
 	 */
-	public String possibleFields_h(Integer[] pos, char[][] board) {
+	public String listPossibleFields_h(Integer[] pos, char[][] board) {
 		String result = "";
 		result = result + listDir_h(pos, 0, -1, board);
 		result = result + listDir_h(pos, 0, 1, board);
@@ -605,7 +605,7 @@ public class XiangqiGame extends Game implements Serializable, XiangqiConstants{
 	 * @param board
 	 * @return
 	 */
-	public String possibleFields_H(Integer[] pos, char[][] board) {
+	public String listPossibleFields_H(Integer[] pos, char[][] board) {
 		String result = "";
 		result = result + listDir_H(pos, 0, -1, board);
 		result = result + listDir_H(pos, 0, 1, board);
@@ -628,14 +628,14 @@ public class XiangqiGame extends Game implements Serializable, XiangqiConstants{
 		Integer [] p2 = pos;
 		p1[dim] = pos[dim] + dir;
 		p2[dim] = p1[dim] + dir;
-		if(withinArea(p2, "b") && !"gaehrcsGAEHRCS".contains(""+board[p1[0]][p1[1]])) {
+		if(areCoordsWithinArea(p2, "b") && !PIECES_ALL.contains(""+board[p1[0]][p1[1]])) {
 			p1 = p2;
 			p1[dim-1]++;
 			p2[dim-1]--;
-			if(withinArea(p1, "b") && !"gaehrcs".contains(""+board[p1[0]][p1[1]])) {
+			if(areCoordsWithinArea(p1, "b") && !PIECES_RED_ALL.contains(""+board[p1[0]][p1[1]])) {
 				result = result + fieldString(p1[0],p1[1]);
 			}
-			if(withinArea(p2, "b") && !"gaehrcs".contains(""+board[p2[0]][p2[1]])) {
+			if(areCoordsWithinArea(p2, "b") && !PIECES_RED_ALL.contains(""+board[p2[0]][p2[1]])) {
 				result = result + fieldString(p2[0],p2[1]);
 			}
 		}
@@ -656,14 +656,14 @@ public class XiangqiGame extends Game implements Serializable, XiangqiConstants{
 		Integer [] p2 = pos;
 		p1[dim] = pos[dim] + dir;
 		p2[dim] = p1[dim] + dir;
-		if(withinArea(p2, "b") && !"gaehrcsGAEHRCS".contains(""+board[p1[0]][p1[1]])) {
+		if(areCoordsWithinArea(p2, "b") && !PIECES_ALL.contains(""+board[p1[0]][p1[1]])) {
 			p1 = p2;
 			p1[dim-1]++;
 			p2[dim-1]--;
-			if(withinArea(p1, "b") && !"GAEHRCS".contains(""+board[p1[0]][p1[1]])) {
+			if(areCoordsWithinArea(p1, "b") && !PIECES_RED_ALL.contains(""+board[p1[0]][p1[1]])) {
 				result = result + fieldString(p1[0],p1[1]);
 			}
-			if(withinArea(p2, "b") && !"GAEHRCS".contains(""+board[p2[0]][p2[1]])) {
+			if(areCoordsWithinArea(p2, "b") && !PIECES_RED_ALL.contains(""+board[p2[0]][p2[1]])) {
 				result = result + fieldString(p2[0],p2[1]);
 			}
 		}
@@ -676,12 +676,12 @@ public class XiangqiGame extends Game implements Serializable, XiangqiConstants{
 	 * @param board
 	 * @return
 	 */
-	public String possibleFields_r(Integer[] pos, char[][] board) {
+	public String listPossibleFields_r(Integer[] pos, char[][] board) {
 		String result = "";
-		result = result + checkDir_r(pos, 0, -1, board);
-		result = result + checkDir_r(pos, 0, 1, board);
-		result = result + checkDir_r(pos, 1, -1, board);
-		result = result + checkDir_r(pos, 1, 1, board);
+		result = result + listPossibleFields4Direction_r(pos, 0, -1, board);
+		result = result + listPossibleFields4Direction_r(pos, 0, 1, board);
+		result = result + listPossibleFields4Direction_r(pos, 1, -1, board);
+		result = result + listPossibleFields4Direction_r(pos, 1, 1, board);
 		return result;
 	}
 	
@@ -691,12 +691,12 @@ public class XiangqiGame extends Game implements Serializable, XiangqiConstants{
 	 * @param board
 	 * @return
 	 */
-	public String possibleFields_R(Integer[] pos, char[][] board) {
+	public String listPossibleFields_R(Integer[] pos, char[][] board) {
 		String result = "";
-		result = result + checkDir_R(pos, 0, -1, board);
-		result = result + checkDir_R(pos, 0, 1, board);
-		result = result + checkDir_R(pos, 1, -1, board);
-		result = result + checkDir_R(pos, 1, 1, board);
+		result = result + listPossibleFields4Direction_R(pos, 0, -1, board);
+		result = result + listPossibleFields4Direction_R(pos, 0, 1, board);
+		result = result + listPossibleFields4Direction_R(pos, 1, -1, board);
+		result = result + listPossibleFields4Direction_R(pos, 1, 1, board);
 		return result;
 	}
 	
@@ -708,13 +708,13 @@ public class XiangqiGame extends Game implements Serializable, XiangqiConstants{
 	 * @param board
 	 * @return
 	 */
-	public String checkDir_r(Integer[] pos, Integer dim, Integer dir, char[][] board) {
+	public String listPossibleFields4Direction_r(Integer[] pos, Integer dim, Integer dir, char[][] board) {
 		String result = "";
 		Integer [] p = pos;
 		p[dim] = pos[dim] + dir;
-		while(0 <= p[0] && p[0] <= 8 && p[1] >=0 && p[1] <= 9 && !"gaehrcs".contains(""+board[p[0]][p[1]])) {
+		while(0 <= p[0] && p[0] <= 8 && p[1] >=0 && p[1] <= 9 && !PIECES_RED_ALL.contains(""+board[p[0]][p[1]])) {
 			result = result + fieldString(p[0],p[1]);
-			if("GAEHRCS".contains(""+board[p[0]][p[1]])) {
+			if(PIECES_RED_ALL.contains(""+board[p[0]][p[1]])) {
 				p[0] = - 1;
 			}
 			p[dim] += dir;
@@ -730,13 +730,13 @@ public class XiangqiGame extends Game implements Serializable, XiangqiConstants{
 	 * @param board
 	 * @return
 	 */
-	public String checkDir_R(Integer[] pos, Integer dim, Integer dir, char[][] board) {
+	public String listPossibleFields4Direction_R(Integer[] pos, Integer dim, Integer dir, char[][] board) {
 		String result = "";
 		Integer [] p = pos;
 		p[dim] = pos[dim] + dir;
-		while(0 <= p[0] && p[0] <= 8 && p[1] >=0 && p[1] <= 9 && !"GAEHRCS".contains(""+board[p[0]][p[1]])) {
+		while(0 <= p[0] && p[0] <= 8 && p[1] >=0 && p[1] <= 9 && !PIECES_RED_ALL.contains(""+board[p[0]][p[1]])) {
 			result = result + fieldString(p[0],p[1]);
-			if("gaehrcs".contains(""+board[p[0]][p[1]])) {
+			if(PIECES_RED_ALL.contains(""+board[p[0]][p[1]])) {
 				p[0] = - 1;
 			}
 			p[dim] += dir;
@@ -750,12 +750,12 @@ public class XiangqiGame extends Game implements Serializable, XiangqiConstants{
 	 * @param board
 	 * @return
 	 */
-	public String possibleFields_c(Integer[] pos, char[][] board) {
+	public String listPossibleFields_c(Integer[] pos, char[][] board) {
 		String result = "";
-		result = result + checkDir_c(pos, 0, -1, board);
-		result = result + checkDir_c(pos, 0, 1, board);
-		result = result + checkDir_c(pos, 1, -1, board);
-		result = result + checkDir_c(pos, 1, 1, board);
+		result = result + listPossibleFields4Direction_c(pos, 0, -1, board);
+		result = result + listPossibleFields4Direction_c(pos, 0, 1, board);
+		result = result + listPossibleFields4Direction_c(pos, 1, -1, board);
+		result = result + listPossibleFields4Direction_c(pos, 1, 1, board);
 		return result;
 	}
 	
@@ -765,12 +765,12 @@ public class XiangqiGame extends Game implements Serializable, XiangqiConstants{
 	 * @param board
 	 * @return
 	 */
-	public String possibleFields_C(Integer[] pos, char[][] board) {
+	public String listPossibleFields_C(Integer[] pos, char[][] board) {
 		String result = "";
-		result = result + checkDir_C(pos, 0, -1, board);
-		result = result + checkDir_C(pos, 0, 1, board);
-		result = result + checkDir_C(pos, 1, -1, board);
-		result = result + checkDir_C(pos, 1, 1, board);
+		result = result + listPossibleFields4Direction_C(pos, 0, -1, board);
+		result = result + listPossibleFields4Direction_C(pos, 0, 1, board);
+		result = result + listPossibleFields4Direction_C(pos, 1, -1, board);
+		result = result + listPossibleFields4Direction_C(pos, 1, 1, board);
 		return result;
 	}
 
@@ -782,15 +782,15 @@ public class XiangqiGame extends Game implements Serializable, XiangqiConstants{
 	 * @param board
 	 * @return
 	 */
-	public String checkDir_c(Integer[] pos, Integer dim, Integer dir, char[][] board) {
+	public String listPossibleFields4Direction_c(Integer[] pos, Integer dim, Integer dir, char[][] board) {
 		String result = "";
 		Integer[] p = pos;
 		boolean take = false;
 		p[dim] = pos[dim] + dir;
-		while(0 <= p[0] && p[0] <= 8 && p[1] >=0 && p[1] <= 9 && (take == false || !"gaehrcs".contains(""+board[p[0]][p[1]]))) {
-			if(take == false && "gaehrcsGAEHRCS".contains(""+board[p[0]][p[1]])) {
+		while(0 <= p[0] && p[0] <= 8 && p[1] >=0 && p[1] <= 9 && (take == false || !PIECES_RED_ALL.contains(""+board[p[0]][p[1]]))) {
+			if(take == false && PIECES_ALL.contains(""+board[p[0]][p[1]])) {
 				take = true;
-			} else if ((take == false && !"gaehrcsGAEHRCS".contains(""+board[p[0]][p[1]])) || (take = true && !"gaehrcs".contains(""+board[p[0]][p[1]]))){
+			} else if ((take == false && !PIECES_ALL.contains(""+board[p[0]][p[1]])) || (take = true && !PIECES_RED_ALL.contains(""+board[p[0]][p[1]]))){
 				result = result + fieldString(p[0],p[1]);
 			}
 			p[dim] += dir;
@@ -806,15 +806,15 @@ public class XiangqiGame extends Game implements Serializable, XiangqiConstants{
 	 * @param board
 	 * @return
 	 */
-	public String checkDir_C(Integer[] pos, Integer dim, Integer dir, char[][] board) {
+	public String listPossibleFields4Direction_C(Integer[] pos, Integer dim, Integer dir, char[][] board) {
 		String result = "";
 		Integer[] p = pos;
 		boolean take = false;
 		p[dim] = pos[dim] + dir;
-		while(0 <= p[0] && p[0] <= 8 && p[1] >=0 && p[1] <= 9 && (take == false || !"GAEHRCS".contains(""+board[p[0]][p[1]]))) {
-			if(take == false && "gaehrcsGAEHRCS".contains(""+board[p[0]][p[1]])) {
+		while(0 <= p[0] && p[0] <= 8 && p[1] >=0 && p[1] <= 9 && (take == false || !PIECES_RED_ALL.contains(""+board[p[0]][p[1]]))) {
+			if(take == false && PIECES_ALL.contains(""+board[p[0]][p[1]])) {
 				take = true;
-			} else if ((take == false && !"gaehrcsGAEHRCS".contains(""+board[p[0]][p[1]])) || (take = true && !"GAEHRCS".contains(""+board[p[0]][p[1]]))){
+			} else if ((take == false && !PIECES_ALL.contains(""+board[p[0]][p[1]])) || (take = true && !PIECES_RED_ALL.contains(""+board[p[0]][p[1]]))){
 				result = result + fieldString(p[0],p[1]);
 			}
 			p[dim] += dir;
@@ -828,19 +828,19 @@ public class XiangqiGame extends Game implements Serializable, XiangqiConstants{
 	 * @param board
 	 * @return
 	 */
-	public String possibleFields_s(Integer[] pos, char[][] board) {
+	public String listPossibleFields_s(Integer[] pos, char[][] board) {
 		String result = "";
 		Integer[] p = pos;
-		if(withinArea(pos, "rh") && !"gaehrcs".contains(""+board[pos[0]][pos[1]+1])) {
+		if(areCoordsWithinArea(pos, "rh") && !PIECES_RED_ALL.contains(""+board[pos[0]][pos[1]+1])) {
 			result = result + fieldString(pos[0], pos[1]+1);
-		} else if(withinArea(pos, "bh")) {
-			if(pos[1] < 9 && !"gaehrcs".contains(""+board[pos[0]][pos[1]+1])) {
+		} else if(areCoordsWithinArea(pos, "bh")) {
+			if(pos[1] < 9 && !PIECES_RED_ALL.contains(""+board[pos[0]][pos[1]+1])) {
 				result = result + fieldString(pos[0], pos[1]+1);
 			}
-			if(pos[0] > 0 && !"gaehrcs".contains(""+board[pos[0]-1][pos[1]])) {
+			if(pos[0] > 0 && !PIECES_RED_ALL.contains(""+board[pos[0]-1][pos[1]])) {
 				result = result + fieldString(pos[0]-1, pos[1]);
 			}
-			if(pos[0] < 8 && !"gaehrcs".contains(""+board[pos[0]+1][pos[1]])) {
+			if(pos[0] < 8 && !PIECES_RED_ALL.contains(""+board[pos[0]+1][pos[1]])) {
 				result = result + fieldString(pos[0]+1, pos[1]);
 			}
 		}
@@ -853,19 +853,19 @@ public class XiangqiGame extends Game implements Serializable, XiangqiConstants{
 	 * @param board
 	 * @return
 	 */
-	public String possibleFields_S(Integer[] pos, char[][] board) {
+	public String listPossibleFields_S(Integer[] pos, char[][] board) {
 		String result = "";
 		Integer[] p = pos;
-		if(withinArea(pos, "bh") && !"GAEHRCS".contains(""+board[pos[0]][pos[1]-1])) {
+		if(areCoordsWithinArea(pos, "bh") && !PIECES_RED_ALL.contains(""+board[pos[0]][pos[1]-1])) {
 			result = result + fieldString(pos[0], pos[1]-1);
-		} else if(withinArea(pos, "rh")) {
-			if(pos[1] > 0 && !"GAEHRCS".contains(""+board[pos[0]][pos[1]-1])) {
+		} else if(areCoordsWithinArea(pos, "rh")) {
+			if(pos[1] > 0 && !PIECES_RED_ALL.contains(""+board[pos[0]][pos[1]-1])) {
 				result = result + fieldString(pos[0], pos[1]-1);
 			}
-			if(pos[0] > 0 && !"GAEHRCS".contains(""+board[pos[0]-1][pos[1]])) {
+			if(pos[0] > 0 && !PIECES_RED_ALL.contains(""+board[pos[0]-1][pos[1]])) {
 				result = result + fieldString(pos[0]-1, pos[1]);
 			}
-			if(pos[0] < 8 && !"GAEHRCS".contains(""+board[pos[0]+1][pos[1]])) {
+			if(pos[0] < 8 && !PIECES_RED_ALL.contains(""+board[pos[0]+1][pos[1]])) {
 				result = result + fieldString(pos[0]+1, pos[1]);
 			}
 		}
