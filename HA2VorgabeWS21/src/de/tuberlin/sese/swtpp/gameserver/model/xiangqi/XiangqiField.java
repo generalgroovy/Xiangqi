@@ -11,4 +11,10 @@ public class XiangqiField {
 	private ArrayList<XiangqiField> neighborsMove = new ArrayList<XiangqiField>();
 	private ArrayList<XiangqiField> neighborsAttack = new ArrayList<XiangqiField>();
 	
+	public XiangqiField (int row, int column, String pieceOnMe) {
+		this.row = row;
+		this.column = column;
+		this.pieceOnMe = pieceOnMe;
+	}
+	
 }

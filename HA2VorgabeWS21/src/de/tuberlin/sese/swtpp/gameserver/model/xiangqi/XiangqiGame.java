@@ -23,6 +23,8 @@ public class XiangqiGame extends Game implements Serializable, XiangqiConstants{
 	
 	// internal representation of the game state
 	// TODO: insert additional game data here
+	private String boardStateString = BOARD_STATE_BEGINNING;
+	private XiangqiField[][] boardStateArray = new XiangqiField[9][9];
 	/************************
 	 * constructors
 	 ***********************/
@@ -210,7 +212,7 @@ public class XiangqiGame extends Game implements Serializable, XiangqiConstants{
 	@Override
 	public String getBoard() {
 		// TODO: implement
-		return "rheagaehr/9/1c5c1/s1s1s1s1s/9/9/S1S1S1S1S/1C5C1/9/RHEAGAEHR";
+		return boardStateString;
 	}
 
 	@Override
@@ -243,6 +245,19 @@ public class XiangqiGame extends Game implements Serializable, XiangqiConstants{
 		return result;
 	}
 
+	/**
+	 * initializes object representation of board in class field
+	 * @param board
+	 * @return
+	 */
+	public void initXiangqiFields(char[][] board) {
+		for (int i = 0; i < board.length; i++) {
+			for (int j = 0; j < board[i].length; j++) {
+				boardStateArray[i][j] = new XiangqiField(i, j, String.valueOf(board[i][j]));
+			}
+		}
+	}
+	
 	/**
 	 * turns the board matrix into compact FEN-String
 	 * @param matrix
