@@ -220,7 +220,11 @@ public class XiangqiGame extends Game implements Serializable, XiangqiConstants{
 		return false;
 	}	
 	
-	//turns FEN-Notation into 9x10 matrix
+	/**
+	 * turns FEN-Notation into 9x10 matrix
+	 * @param state
+	 * @return
+	 */
 	public char[][] matrizise(String state) {
 		char [][] result = new char[9][10];
 		Integer c = 0;
@@ -239,7 +243,11 @@ public class XiangqiGame extends Game implements Serializable, XiangqiConstants{
 		return result;
 	}
 
-	//turns the board matrix into compact FEN-String
+	/**
+	 * turns the board matrix into compact FEN-String
+	 * @param matrix
+	 * @return
+	 */
 	public String stringify(char[][] matrix) {
 		String result = "";
 		Integer i = 0;
@@ -265,6 +273,12 @@ public class XiangqiGame extends Game implements Serializable, XiangqiConstants{
 		return result;
 	}
 	
+	/**
+	 * translates column index to char as string
+	 * @param column
+	 * @param row
+	 * @return
+	 */
 	public String fieldString(Integer column, Integer row) {
 		String result = "";
 		if(column == 0) {
@@ -297,7 +311,12 @@ public class XiangqiGame extends Game implements Serializable, XiangqiConstants{
 		return result + row;
 	}
 	
-	//checks whether coordinates are within board b, red palace rp, black palace bp, red half rh oder black half bh
+	/**
+	 * checks whether coordinates are within board b, red palace rp, black palace bp, red half rh oder black half bh
+	 * @param pos
+	 * @param area
+	 * @return
+	 */
 	public boolean withinArea(Integer[] pos, String area) {
 		boolean result = true;
 		if(area == "b" && (pos[0] < 0 || pos[0] > 8 || pos[1] < 0 || pos[1] > 9)) {
@@ -316,7 +335,11 @@ public class XiangqiGame extends Game implements Serializable, XiangqiConstants{
 		return  result;
 	}
 	
-	//checks whether red is put in check
+	/**
+	 * checks whether red is put in check
+	 * @param board
+	 * @return
+	 */
 	public boolean isRedInCheck(char[][] board) {
 		boolean result = false;
 		Integer[] pos = {0,0};
@@ -352,7 +375,11 @@ public class XiangqiGame extends Game implements Serializable, XiangqiConstants{
 		return result;
 	}
 	
-	//checks whether black is put in check
+	/**
+	 * checks whether black is put in check
+	 * @param board
+	 * @return
+	 */
 	public boolean isBlackInCheck(char[][] board) {
 		boolean result = false;
 		Integer[] pos = {0,0};
@@ -388,7 +415,12 @@ public class XiangqiGame extends Game implements Serializable, XiangqiConstants{
 		return result;
 	}
 	
-	//lists fields red general can move to only considering movement pattern, palace and pieces in the way
+	/**
+	 * lists fields red general can move to only considering movement pattern, palace and pieces in the way
+	 * @param pos
+	 * @param board
+	 * @return
+	 */
 	public String possibleFields_g(Integer[] pos, char[][] board) {
 		String result = "";
 		if(pos[1] > 0 && !"gaehrcs".contains(""+board[pos[0]][pos[1]-1])) {
@@ -406,7 +438,12 @@ public class XiangqiGame extends Game implements Serializable, XiangqiConstants{
 		return result;
 	}
 	
-	//lists fields black general can move to only considering movement pattern, palace and pieces in the way
+	/**
+	 * lists fields black general can move to only considering movement pattern, palace and pieces in the way
+	 * @param pos
+	 * @param board
+	 * @return
+	 */
 	public String possibleFields_G(Integer[] pos, char[][] board) {
 		String result = "";
 		if(pos[1] > 7 && !"GAEHRCS".contains(""+board[pos[0]][pos[1]-1])) {
@@ -424,7 +461,9 @@ public class XiangqiGame extends Game implements Serializable, XiangqiConstants{
 		return result;
 	}
 
-	//lists fields "threatened" by red generals evil eye
+	/**
+	 * lists fields "threatened" by red generals evil eye
+	 */
 	public String evilEye_g(Integer[] pos, char[][] board) {
 		String result = "";
 		Integer[] p = pos;
@@ -436,7 +475,12 @@ public class XiangqiGame extends Game implements Serializable, XiangqiConstants{
 		return result;
 	}
 
-	//lists fields "threatened" by black generals evil eye
+	/**
+	 * lists fields "threatened" by black generals evil eye
+	 * @param pos
+	 * @param board
+	 * @return
+	 */
 	public String evilEye_G(Integer[] pos, char[][] board) {
 		String result = "";
 		Integer[] p = pos;
@@ -448,7 +492,12 @@ public class XiangqiGame extends Game implements Serializable, XiangqiConstants{
 		return result;
 	}
 	
-	//lists fields red advisor can move to only considering movement pattern, palace and pieces in the way
+	/**
+	 * lists fields red advisor can move to only considering movement pattern, palace and pieces in the way
+	 * @param pos
+	 * @param board
+	 * @return
+	 */
 	public String possibleFields_a(Integer[] pos, char[][] board) {
 		String result = "";
 		if(pos[0] > 3 && pos[1] > 0 && !"gaehrcs".contains(""+board[pos[0]-1][pos[1]-1])) {
@@ -466,7 +515,12 @@ public class XiangqiGame extends Game implements Serializable, XiangqiConstants{
 		return result;
 	}
 	
-	//lists fields black advisor can move to only considering movement pattern, palace and pieces in the way
+	/**
+	 * lists fields black advisor can move to only considering movement pattern, palace and pieces in the way
+	 * @param pos
+	 * @param board
+	 * @return
+	 */
 	public String possibleFields_A(Integer[] pos, char[][] board) {
 		String result = "";
 		if(pos[0] > 3 && pos[1] > 7 && !"GAEHRCS".contains(""+board[pos[0]-1][pos[1]-1])) {
@@ -484,7 +538,12 @@ public class XiangqiGame extends Game implements Serializable, XiangqiConstants{
 		return result;
 	}
 	
-	//lists fields red advisor can move to only considering movement pattern, river and pieces in the way
+	/**
+	 * lists fields red advisor can move to only considering movement pattern, river and pieces in the way
+	 * @param pos
+	 * @param board
+	 * @return
+	 */
 	public String possibleFields_e(Integer[] pos, char[][] board) {
 		String result = "";
 		if(pos[0] > 1 && pos[1] > 1 && !"gaehrcsGAEHRCS".contains(""+board[pos[0]-1][pos[1]-1]) && !"gaehrcs".contains(""+board[pos[0]-2][pos[1]-2])) {
@@ -502,7 +561,12 @@ public class XiangqiGame extends Game implements Serializable, XiangqiConstants{
 		return result;
 	}
 	
-	//lists fields black advisor can move to only considering movement pattern, river and pieces in the way
+	/**
+	 * lists fields black advisor can move to only considering movement pattern, river and pieces in the way
+	 * @param pos
+	 * @param board
+	 * @return
+	 */
 	public String possibleFields_E(Integer[] pos, char[][] board) {
 		String result = "";
 		if(pos[0] > 1 && pos[1] > 5 && !"gaehrcsGAEHRCS".contains(""+board[pos[0]-1][pos[1]-1]) && !"GAEHRCS".contains(""+board[pos[0]-2][pos[1]-2])) {
@@ -520,7 +584,12 @@ public class XiangqiGame extends Game implements Serializable, XiangqiConstants{
 		return result;
 	}
 	
-	//lists fields red horse can move to only considering movement pattern and pieces in the way
+	/**
+	 * lists fields red horse can move to only considering movement pattern and pieces in the way
+	 * @param pos
+	 * @param board
+	 * @return
+	 */
 	public String possibleFields_h(Integer[] pos, char[][] board) {
 		String result = "";
 		result = result + listDir_h(pos, 0, -1, board);
@@ -530,7 +599,12 @@ public class XiangqiGame extends Game implements Serializable, XiangqiConstants{
 		return result;
 	}
 	
-	//lists fields black horse can move to only considering movement pattern and pieces in the way
+	/**
+	 * lists fields black horse can move to only considering movement pattern and pieces in the way
+	 * @param pos
+	 * @param board
+	 * @return
+	 */
 	public String possibleFields_H(Integer[] pos, char[][] board) {
 		String result = "";
 		result = result + listDir_H(pos, 0, -1, board);
@@ -540,7 +614,14 @@ public class XiangqiGame extends Game implements Serializable, XiangqiConstants{
 		return result;
 	}
 	
-	//lists possible fields in one direction for movement of red horse
+	/**
+	 * lists possible fields in one direction for movement of red horse
+	 * @param pos
+	 * @param dim
+	 * @param dir
+	 * @param board
+	 * @return
+	 */
 	public String listDir_h(Integer[] pos, Integer dim, Integer dir, char[][] board) {
 		String result = "";
 		Integer [] p1 = pos;
@@ -561,7 +642,14 @@ public class XiangqiGame extends Game implements Serializable, XiangqiConstants{
 		return result;
 	}
 	
-	//lists possible fields in one direction for movement of black horse
+	/**
+	 * lists possible fields in one direction for movement of black horse
+	 * @param pos
+	 * @param dim
+	 * @param dir
+	 * @param board
+	 * @return
+	 */
 	public String listDir_H(Integer[] pos, Integer dim, Integer dir, char[][] board) {
 		String result = "";
 		Integer [] p1 = pos;
@@ -582,7 +670,12 @@ public class XiangqiGame extends Game implements Serializable, XiangqiConstants{
 		return result;
 	}
 	
-	//lists fields red rook can move to only considering movement pattern and pieces in the way
+	/**
+	 * lists fields red rook can move to only considering movement pattern and pieces in the way
+	 * @param pos
+	 * @param board
+	 * @return
+	 */
 	public String possibleFields_r(Integer[] pos, char[][] board) {
 		String result = "";
 		result = result + checkDir_r(pos, 0, -1, board);
@@ -592,7 +685,12 @@ public class XiangqiGame extends Game implements Serializable, XiangqiConstants{
 		return result;
 	}
 	
-	//lists fields red rook can move to only considering movement pattern and pieces in the way
+	/**
+	 * lists fields red rook can move to only considering movement pattern and pieces in the way
+	 * @param pos
+	 * @param board
+	 * @return
+	 */
 	public String possibleFields_R(Integer[] pos, char[][] board) {
 		String result = "";
 		result = result + checkDir_R(pos, 0, -1, board);
@@ -602,7 +700,14 @@ public class XiangqiGame extends Game implements Serializable, XiangqiConstants{
 		return result;
 	}
 	
-	//lists possible fields in one direction for movement of red rook
+	/**
+	 * lists possible fields in one direction for movement of red rook
+	 * @param pos
+	 * @param dim
+	 * @param dir
+	 * @param board
+	 * @return
+	 */
 	public String checkDir_r(Integer[] pos, Integer dim, Integer dir, char[][] board) {
 		String result = "";
 		Integer [] p = pos;
@@ -617,7 +722,14 @@ public class XiangqiGame extends Game implements Serializable, XiangqiConstants{
 		return result;
 	}
 	
-	//lists possible fields in one direction for movement of black rook
+	/**
+	 * lists possible fields in one direction for movement of black rook
+	 * @param pos
+	 * @param dim
+	 * @param dir
+	 * @param board
+	 * @return
+	 */
 	public String checkDir_R(Integer[] pos, Integer dim, Integer dir, char[][] board) {
 		String result = "";
 		Integer [] p = pos;
@@ -632,7 +744,12 @@ public class XiangqiGame extends Game implements Serializable, XiangqiConstants{
 		return result;
 	}
 	
-	//lists fields red cannon can move to only considering movement pattern and pieces in the way
+	/**
+	 * lists fields red cannon can move to only considering movement pattern and pieces in the way
+	 * @param pos
+	 * @param board
+	 * @return
+	 */
 	public String possibleFields_c(Integer[] pos, char[][] board) {
 		String result = "";
 		result = result + checkDir_c(pos, 0, -1, board);
@@ -642,7 +759,12 @@ public class XiangqiGame extends Game implements Serializable, XiangqiConstants{
 		return result;
 	}
 	
-	//lists fields black cannon can move to only considering movement pattern and pieces in the way
+	/**
+	 * lists fields black cannon can move to only considering movement pattern and pieces in the way
+	 * @param pos
+	 * @param board
+	 * @return
+	 */
 	public String possibleFields_C(Integer[] pos, char[][] board) {
 		String result = "";
 		result = result + checkDir_C(pos, 0, -1, board);
@@ -652,7 +774,14 @@ public class XiangqiGame extends Game implements Serializable, XiangqiConstants{
 		return result;
 	}
 
-	//lists possible fields in one direction for movement of red cannon
+	/**
+	 * lists possible fields in one direction for movement of red cannon
+	 * @param pos
+	 * @param dim
+	 * @param dir
+	 * @param board
+	 * @return
+	 */
 	public String checkDir_c(Integer[] pos, Integer dim, Integer dir, char[][] board) {
 		String result = "";
 		Integer[] p = pos;
@@ -669,7 +798,14 @@ public class XiangqiGame extends Game implements Serializable, XiangqiConstants{
 		return result;
 	}
 	
-	//lists possible fields in one direction for movement of black cannon
+	/**
+	 * lists possible fields in one direction for movement of black cannon
+	 * @param pos
+	 * @param dim
+	 * @param dir
+	 * @param board
+	 * @return
+	 */
 	public String checkDir_C(Integer[] pos, Integer dim, Integer dir, char[][] board) {
 		String result = "";
 		Integer[] p = pos;
@@ -686,7 +822,12 @@ public class XiangqiGame extends Game implements Serializable, XiangqiConstants{
 		return result;
 	}
 	
-	//lists fields red soldier can move to only considering movement pattern and pieces in the way
+	/**
+	 * lists fields red soldier can move to only considering movement pattern and pieces in the way
+	 * @param pos
+	 * @param board
+	 * @return
+	 */
 	public String possibleFields_s(Integer[] pos, char[][] board) {
 		String result = "";
 		Integer[] p = pos;
@@ -706,7 +847,12 @@ public class XiangqiGame extends Game implements Serializable, XiangqiConstants{
 		return result;
 	}
 	
-	//lists fields black soldier can move to only considering movement pattern and pieces in the way
+	/**
+	 * lists fields black soldier can move to only considering movement pattern and pieces in the way
+	 * @param pos
+	 * @param board
+	 * @return
+	 */
 	public String possibleFields_S(Integer[] pos, char[][] board) {
 		String result = "";
 		Integer[] p = pos;
